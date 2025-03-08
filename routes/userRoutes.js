@@ -36,24 +36,32 @@ router.post("/signup", async (req, res) => {
 });
 
 // 🔵 SIGNIN Route (❌ No userType)
+// 🔵 SIGNIN Route (Modified to use email)
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;  // ✅ Get email instead of username
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });  // ✅ Search by email
     if (!user) {
-      return res.status(400).json({ error: "Invalid username or password" });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid username or password" });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
-    
-    res.status(200).json({ success: true, message: "Login successful!", username: user.username });
+
+    res.status(200).json({ 
+      success: true, 
+      message: "Login successful!", 
+      email: user.email,  
+      userType: user.userType  // ✅ Send userType
+    });
   } catch (error) {
     res.status(500).json({ error: "Server error: " + error.message });
   }
 });
+
+
 
 module.exports = router;

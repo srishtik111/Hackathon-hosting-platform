@@ -54,9 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         localStorage.setItem("username-ppl", username);
-        window.location.href = "/Participation.html";
+        window.location.href = "/profile";
       }
-      
     } catch (err) {
       console.error("Signup failed:", err);
       alert("Server error. Please try again.");
@@ -64,36 +63,43 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Sign In Form Submission (❌ No userType)
-  document.getElementById("sign-in-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevents default form submission
+  document.querySelector(".sign-in-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
 
-    const username = document.getElementById("signin-username").value;
+    const email = document.getElementById("signin-email").value;
     const password = document.getElementById("signin-password").value;
 
-    // ❌ Remove fetching user type (if present)
-    // const userType = document.getElementById("signin-user-type").value; 
-
-    if (!username || !password) {
-        alert("Please enter username and password.");
+    if (!email || !password) {
+        alert("Please enter email and password.");
         return;
     }
 
-    // Simulate a login request (Replace with actual API call)
     fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.message === "Login successful!") {  // ✅ Check success message
-          localStorage.setItem("username-ppl", username);  // ✅ Store username
-          window.location.href = "/participation.html"; // ✅ Redirect only on success
-      } else {
-          alert("Invalid credentials!");
-      }
-  })
-  .catch(error => console.error("Error:", error));
-  
-  });
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem("email-ppl", data.email);
+            localStorage.setItem("userType-ppl", data.userType);
+
+            // ✅ Corrected redirection
+            if (data.userType === "participant") {
+                window.location.href = "Participation.html";
+            } else if (data.userType === "organizer") {
+                window.location.href = "organizer.html";
+            } else {
+                window.location.href = "profile.html";  // Default fallback
+            }
+        } else {
+            alert("Invalid credentials!");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+
+
+
 });
