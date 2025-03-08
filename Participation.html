@@ -16,6 +16,12 @@
                  <label for="name">Full Name</label>
                  <input type="text" id="name" placeholder="Enter your full name" required>
              </div>
+
+             <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            
              <div class="form-group">
                  <label>Gender</label>
                  <div class="gender-options">
@@ -77,75 +83,83 @@
              </div>
  
              <button type="submit">Register Now 🚀</button>
+
+             <!-- Hidden link that will be shown after successful registration -->
+<a id="redirectLink" href="hackathon.html" style="display: none;">Proceed to Hackathon Page</a>
+
          </form>
      </div>
  
      <script>
-         document.getElementById("registrationForm").addEventListener("submit", function(event) {
-             event.preventDefault(); // Prevent form submission
- 
-             let name = document.getElementById("name").value.trim();
-             let email = document.getElementById("email").value.trim();
-             let phone = document.getElementById("phone").value.trim();
-             let age = document.getElementById("age").value.trim();
-             let degree = document.getElementById("degree").value;
-             let college = document.getElementById("college").value.trim();
-             let github = document.getElementById("github").value.trim();
-             let linkedin = document.getElementById("linkedin").value.trim();
-             let skills = document.querySelectorAll('input[name="skills"]:checked');
-             let resume = document.getElementById("resume").files[0];
- 
-             // Email validation
-             let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-             if (!emailPattern.test(email)) {
-                 alert("❌ Please enter a valid email address!");
-                 return;
-             }
- 
-             // Phone number validation (10 digits)
-             let phonePattern = /^[0-9]{10}$/;
-             if (!phonePattern.test(phone)) {
-                 alert("❌ Phone number must be exactly 10 digits!");
-                 return;
-             }
- 
-             // Age validation (between 10-100)
-             if (isNaN(age) || age < 10 || age > 100) {
-                 alert("❌ Age must be between 10 and 100!");
-                 return;
-             }
-             
- 
-             // GitHub URL validation
-             let githubPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
-             if (!githubPattern.test(github)) {
-                 alert("❌ Please enter a valid GitHub profile link!");
-                 return;
-             }
- 
-             // LinkedIn URL validation
-             let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
-             if (!linkedinPattern.test(linkedin)) {
-                 alert("❌ Please enter a valid LinkedIn profile link!");
-                 return;
-             }
- 
-             // Ensure at least one skill is selected
-             if (skills.length === 0) {
-                 alert("❌ Please select at least one skill!");
-                 return;
-             }
- 
-             // Resume file validation (PDF only)
-             if (!resume || resume.type !== "application/pdf") {
-                 alert("❌ Please upload a valid PDF file as your resume!");
-                 return;
-             }
- 
-             // If all validations pass
-             alert("✅ Registration successful!");
-             this.submit(); // Submit form
-         });
-     </script>
+       
+       document.getElementById("registrationForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim(); // Now exists in HTML
+    let phone = document.getElementById("phone").value.trim();
+    let age = document.getElementById("age").value.trim();
+    let degree = document.getElementById("degree").value;
+    let college = document.getElementById("college").value.trim();
+    let github = document.getElementById("github").value.trim();
+    let linkedin = document.getElementById("linkedin").value.trim();
+    let skills = document.querySelectorAll('input[name="skills"]:checked');
+    let resume = document.getElementById("resume").files[0];
+
+    // Email validation
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
+        alert("❌ Please enter a valid email address!");
+        return;
+    }
+
+    // Phone number validation (10 digits)
+    let phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(phone)) {
+        alert("❌ Phone number must be exactly 10 digits!");
+        return;
+    }
+
+    // Age validation (between 10-100)
+    if (isNaN(age) || age < 10 || age > 100) {
+        alert("❌ Age must be between 10 and 100!");
+        return;
+    }
+
+    // GitHub URL validation
+    let githubPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+    if (!githubPattern.test(github)) {
+        alert("❌ Please enter a valid GitHub profile link!");
+        return;
+    }
+
+    // LinkedIn URL validation
+    let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+    if (!linkedinPattern.test(linkedin)) {
+        alert("❌ Please enter a valid LinkedIn profile link!");
+        return;
+    }
+
+    // Ensure at least one skill is selected
+    if (skills.length === 0) {
+        alert("❌ Please select at least one skill!");
+        return;
+    }
+
+    // Resume file validation (PDF only)
+    if (!resume || resume.type !== "application/pdf") {
+        alert("❌ Please upload a valid PDF file as your resume!");
+        return;
+    }
+
+    // ✅ If all validations pass
+    alert("✅ Registration successful! Click the link below to proceed.");
+
+    // Show the hidden link
+    document.getElementById("redirectLink").style.display = "block";
+});
+
+
+    </script>
  </body>
  </html>

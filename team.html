@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="shortcut icon" href="images/assets/logo-favicon-color.svg" type="image/x-icon">
+    <link rel="stylesheet" href="stylesheets/login.css" />
+    <link rel="stylesheet" href="stylesheets/register.css" />
+</head>
+<body>
+    <main>
+        <div class="box">
+          <div class="inner-box">
+            <div class="forms-wrap">
+
+            <!-- join a team -->
+            <form action="index.html" autocomplete="off" class="sign-in-form">
+              <div class="logo" style="width: 100%;">
+                  <a href="/"><h1 style="color: #151111;">Devnovate&lt;/&gt;</h1></a> 
+              </div>
+
+              <div class="heading">
+                  <h2>Join Team</h2>
+                  <h6>Don't have a team?</h6>
+                  <a href="#" class="toggle">Create a Team</a>
+              </div>
+
+              <div class="actual-form">
+                  <div class="input-wrap">
+                      <input type="text" class="input-field" autocomplete="off" required />
+                      <label>Enter Team Name or Invite Link</label>
+                  </div>
+                  <input type="submit" value="Join Team" class="sign-btn" />
+              </div>
+          </form>
+
+
+             <!-- HOME PAGE BUTTON - GLOBAL POSITION -->
+             <div style="position: fixed; top: 20px; right: 20px; z-index: 999;">
+              <button onclick="redirectToHome()" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
+                  Home Page
+              </button>
+          </div>
+            
+            
+            <!--  Create a team -->
+            <form autocomplete="off" class="sign-up-form">
+              <div class="logo">
+                  <h1 style="color: #151111;">Devnovate&lt;/&gt;</h1>
+              </div>
+
+              <div class="heading">
+                  <h2>Create a Team</h2>
+                  <h6>Want to join a team instead?</h6>
+                  <a href="#" class="toggle">Join Team</a>
+              </div>
+
+              <div class="actual-form">
+                  <div class="input-wrap">
+                      <input type="text" id="team-name" minlength="4" class="input-field" autocomplete="off" required />
+                      <label>Team Name</label>
+                  </div>
+                  <button type="button" class="sign-btn" onclick="generateInviteLink(event)">Create Team</button>
+
+                 <!-- Invite Link Section -->
+                  <div id="invite-container" style="display: none; margin-top: 10px;">
+                    <input type="button" id="invite-link" value="Invite Link" style="width: 100%; cursor: pointer;" />
+                     <button type="button" onclick="copyInviteLink()">Copy</button>
+                  </div>
+
+
+              </div>
+          </form>
+
+
+            </div>
+  
+            <div class="carousel">
+              <div class="images-wrapper">
+                <img src="images/assets/login1.png" class="image img-1 show" alt="" />
+                <img src="images/assets/login2.png" class="image img-2" alt="" />
+                <img src="images/assets/login3.png" class="image img-3" alt="" />
+              </div>
+  
+              <div class="text-slider">
+                <div class="text-wrap">
+                  <div class="text-group">
+                    <h2>Unleash your coding prowess</h2>
+                    <h2>Win exciting prizes</h2>
+                    <h2>Join our weekend coding frenzy!</h2>
+                  </div>
+                </div>
+  
+                <div class="bullets">
+                  <span class="active" data-value="1"></span>
+                  <span data-value="2"></span>
+                  <span data-value="3"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div id="main2" class="hide">
+        <div id="popup13">
+            <p>Team Created Successfully&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#63E6BE" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></p>
+            <span>Redirecting to home page....</span>
+          </div>
+      </div>
+      
+      <!-- Javascript file -->
+      <script src="javascripts/login.js"></script>
+      <script src="javascripts/teamm.js"></script>
+</body>
+</html>

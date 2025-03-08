@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Sign In Form Submission (❌ No userType)
+  // Sign In Form Submission
   document.querySelector(".sign-in-form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            localStorage.setItem("userId", data.userId); // ✅ Store userId
             localStorage.setItem("email-ppl", data.email);
             localStorage.setItem("userType-ppl", data.userType);
 
@@ -99,7 +100,5 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error("Error:", error));
 });
-
-
 
 });
