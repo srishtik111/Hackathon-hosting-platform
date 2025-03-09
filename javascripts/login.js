@@ -33,14 +33,14 @@ bullets.forEach((bullet) => bullet.addEventListener("click", moveSlider));
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Sign Up Form Submission
+  // ✅ Sign Up Form Submission
   document.querySelector(".sign-up-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const username = document.getElementById("signup-username").value;
     const email = document.getElementById("signup-email").value;
     const password = document.getElementById("signup-password").value;
-    const userType = document.getElementById("signup-user-type").value; // ✅ Get selected value
+    const userType = document.getElementById("signup-user-type").value; // ✅ Get user type
 
     try {
       const response = await fetch("http://localhost:5000/signup", {
@@ -54,7 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         localStorage.setItem("username-ppl", username);
-        window.location.href = "/profile";
+        localStorage.setItem("userType-ppl", userType); // ✅ Store userType
+
+        // ✅ Redirect based on user type after sign-up
+        if (userType === "participant") {
+          window.location.href = "Participation.html";
+        } else if (userType === "organizer") {
+          window.location.href = "organizer.html";
+        }
       }
     } catch (err) {
       console.error("Signup failed:", err);
@@ -62,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Sign In Form Submission
+  // ✅ Sign In Form Submission
   document.querySelector(".sign-in-form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -82,23 +89,20 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            localStorage.setItem("userId", data.userId); // ✅ Store userId
+            localStorage.setItem("userId", data.userId);
             localStorage.setItem("email-ppl", data.email);
             localStorage.setItem("userType-ppl", data.userType);
 
-            // ✅ Corrected redirection
+            // ✅ Redirect based on user type after login
             if (data.userType === "participant") {
-                window.location.href = "Participation.html";
+                window.location.href = "hackathon.html";
             } else if (data.userType === "organizer") {
-                window.location.href = "organizer.html";
-            } else {
-                window.location.href = "profile.html";  // Default fallback
+                window.location.href = "hackathon-dashboard.html";
             }
         } else {
             alert("Invalid credentials!");
         }
     })
     .catch(error => console.error("Error:", error));
-});
-
+  });
 });

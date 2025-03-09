@@ -1,165 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Participant Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 Participant Registration</h2>
+        <form id="registrationForm">
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+            </div>
 
- <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Hackathon Participant Registration</title>
-     <link rel="stylesheet" href="styles.css">
- </head>
- <body>
-     <div class="container">
-         <h2>🚀 Participant Registration</h2>
-         <form id="registrationForm">
-             
-             <div class="form-group">
-                 <label for="name">Full Name</label>
-                 <input type="text" id="name" placeholder="Enter your full name" required>
-             </div>
-
-             <div class="form-group">
+            <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" placeholder="Enter your email" required>
             </div>
             
-             <div class="form-group">
-                 <label>Gender</label>
-                 <div class="gender-options">
-                     <label><input type="radio" name="gender" value="Male" required> <span>Male</span></label>
-                     <label><input type="radio" name="gender" value="Female"> <span>Female</span></label>
-                     <label><input type="radio" name="gender" value="Other"> <span>Other</span></label>
-                 </div>
-             </div>
-             
-             <div class="form-group">
-                 <label for="phone">Phone Number</label>
-                 <input type="tel" id="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}">
-             </div>
-             <div class="form-group">
-                 <label for="age">Age</label>
-                 <input type="number" id="age" placeholder="Enter your age" required min="10" max="100">
-             </div>
-             <div class="form-group">
-                 <label for="degree">Degree</label>
-                 <select id="degree" required>
-                     <option value="" disabled selected>Select your degree</option>
-                     <option value="BTech">B.Tech</option>
-                     <option value="MTech">M.Tech</option>
-                     <option value="BCA">BCA</option>
-                     <option value="MCA">MCA</option>
-                     <option value="BSc">B.Sc</option>
-                     <option value="MSc">M.Sc</option>
-                     <option value="Other">Other</option>
-                 </select>
-             </div>
- 
-             <div class="form-group">
-                 <label for="college">College/Organization</label>
-                 <input type="text" id="college" placeholder="Enter your college or company" required>
-             </div>
-             <div class="form-group">
-                 <label for="github">GitHub Profile</label>
-                 <input type="url" id="github" placeholder="Enter your GitHub profile link" required>
-             </div>
-             <div class="form-group">
-                 <label for="linkedin">LinkedIn Profile</label>
-                 <input type="url" id="linkedin" placeholder="Enter your LinkedIn profile link" required>
-             </div>
- 
-             <div class="form-group">
-                 <label for="skills">Skills (Select at least one)</label>
-                 <div id="skills" class="skills-container">
-                     <label class="skill-item"><input type="checkbox" name="skills" value="frontend"> Frontend Development</label>
-                     <label class="skill-item"><input type="checkbox" name="skills" value="backend"> Backend Development</label>
-                     <label class="skill-item"><input type="checkbox" name="skills" value="ml"> Machine Learning</label>
-                     <label class="skill-item"><input type="checkbox" name="skills" value="uiux"> UI/UX Design</label>
-                     <label class="skill-item"><input type="checkbox" name="skills" value="cybersec"> Cybersecurity</label>
-                     <label class="skill-item"><input type="checkbox" name="skills" value="blockchain"> Blockchain</label>
-                 </div>
-             </div>
-             <div class="form-group">
-                 <label for="resume">Upload Your Resume (PDF only)</label>
-                 <input type="file" id="resume" name="resume" accept="application/pdf" required>
-             </div>
- 
-             <button type="submit">Register Now 🚀</button>
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="gender-options">
+                    <label><input type="radio" name="gender" value="Male" required> <span>Male</span></label>
+                    <label><input type="radio" name="gender" value="Female"> <span>Female</span></label>
+                    <label><input type="radio" name="gender" value="Other"> <span>Other</span></label>
+                </div>
+            </div>
 
-             <!-- Hidden link that will be shown after successful registration -->
-<a id="redirectLink" href="hackathon.html" style="display: none;">Proceed to Hackathon Page</a>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}">
+            </div>
 
-         </form>
-     </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Enter your age" required min="10" max="100">
+            </div>
+
+            <div class="form-group">
+                <label for="degree">Degree</label>
+                <select id="degree" required>
+                    <option value="" disabled selected>Select your degree</option>
+                    <option value="BTech">B.Tech</option>
+                    <option value="MTech">M.Tech</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="BSc">B.Sc</option>
+                    <option value="MSc">M.Sc</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="college">College/Organization</label>
+                <input type="text" id="college" placeholder="Enter your college or company" required>
+            </div>
+
+            <div class="form-group">
+                <label for="github">GitHub Profile</label>
+                <input type="url" id="github" placeholder="Enter your GitHub profile link" required>
+            </div>
+
+            <div class="form-group">
+                <label for="linkedin">LinkedIn Profile</label>
+                <input type="url" id="linkedin" placeholder="Enter your LinkedIn profile link" required>
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Skills (Select at least one)</label>
+                <div id="skills" class="skills-container">
+                    <label class="skill-item"><input type="checkbox" name="skills" value="frontend"> Frontend Development</label>
+                    <label class="skill-item"><input type="checkbox" name="skills" value="backend"> Backend Development</label>
+                    <label class="skill-item"><input type="checkbox" name="skills" value="ml"> Machine Learning</label>
+                    <label class="skill-item"><input type="checkbox" name="skills" value="uiux"> UI/UX Design</label>
+                    <label class="skill-item"><input type="checkbox" name="skills" value="cybersec"> Cybersecurity</label>
+                    <label class="skill-item"><input type="checkbox" name="skills" value="blockchain"> Blockchain</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="resume">Upload Your Resume (PDF only)</label>
+                <input type="file" id="resume" name="resume" accept="application/pdf" required>
+            </div>
+
+            <button type="submit">Register Now 🚀</button>
  
-     <script>
-       
-       document.getElementById("registrationForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
+             <!--Hidden link that will be shown after successful registration -->
+            <a id="redirectLink" href="hackathon.html" style="display: block;">Proceed to Hackathon Page</a>
 
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim(); // Now exists in HTML
-    let phone = document.getElementById("phone").value.trim();
-    let age = document.getElementById("age").value.trim();
-    let degree = document.getElementById("degree").value;
-    let college = document.getElementById("college").value.trim();
-    let github = document.getElementById("github").value.trim();
-    let linkedin = document.getElementById("linkedin").value.trim();
-    let skills = document.querySelectorAll('input[name="skills"]:checked');
+        </form>
+    </div>
+
+    <script>
+    document.getElementById("registrationForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    let formData = new FormData();
+    formData.append("name", document.getElementById("name").value.trim());
+    formData.append("email", document.getElementById("email").value.trim());
+    formData.append("phone", document.getElementById("phone").value.trim());
+    formData.append("age", document.getElementById("age").value.trim());
+    formData.append("degree", document.getElementById("degree").value);
+    formData.append("college", document.getElementById("college").value.trim());
+    formData.append("github", document.getElementById("github").value.trim());
+    formData.append("linkedin", document.getElementById("linkedin").value.trim());
+
+    let skills = [];
+    document.querySelectorAll('input[name="skills"]:checked').forEach(skill => {
+        skills.push(skill.value);
+    });
+    formData.append("skills", skills.join(",")); // Convert array to comma-separated string
+
     let resume = document.getElementById("resume").files[0];
+    formData.append("resume", resume);
 
-    // Email validation
-    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(email)) {
-        alert("❌ Please enter a valid email address!");
-        return;
+    try {
+        let response = await fetch("http://localhost:5000/api/participants/register", {
+            method: "POST",
+            body: formData
+        });
+
+        let result = await response.json();
+         if (response.ok) {
+             alert("✅ Registration successful! Redirecting...");
+             window.location.href = "hackathon.html";
+         } 
+        else {
+            alert("❌ Registration failed: " + result.error);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("❌ Error connecting to the server.");
     }
-
-    // Phone number validation (10 digits)
-    let phonePattern = /^[0-9]{10}$/;
-    if (!phonePattern.test(phone)) {
-        alert("❌ Phone number must be exactly 10 digits!");
-        return;
-    }
-
-    // Age validation (between 10-100)
-    if (isNaN(age) || age < 10 || age > 100) {
-        alert("❌ Age must be between 10 and 100!");
-        return;
-    }
-
-    // GitHub URL validation
-    let githubPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
-    if (!githubPattern.test(github)) {
-        alert("❌ Please enter a valid GitHub profile link!");
-        return;
-    }
-
-    // LinkedIn URL validation
-    let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
-    if (!linkedinPattern.test(linkedin)) {
-        alert("❌ Please enter a valid LinkedIn profile link!");
-        return;
-    }
-
-    // Ensure at least one skill is selected
-    if (skills.length === 0) {
-        alert("❌ Please select at least one skill!");
-        return;
-    }
-
-    // Resume file validation (PDF only)
-    if (!resume || resume.type !== "application/pdf") {
-        alert("❌ Please upload a valid PDF file as your resume!");
-        return;
-    }
-
-    // ✅ If all validations pass
-    alert("✅ Registration successful! Click the link below to proceed.");
-
-    // Show the hidden link
-    document.getElementById("redirectLink").style.display = "block";
+    
 });
 
 
     </script>
- </body>
- </html>
+</body>
+</html>
