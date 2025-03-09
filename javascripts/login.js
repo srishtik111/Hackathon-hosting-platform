@@ -33,14 +33,35 @@ bullets.forEach((bullet) => bullet.addEventListener("click", moveSlider));
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ✅ Sign Up Form Submission
   document.querySelector(".sign-up-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const username = document.getElementById("signup-username").value;
-    const email = document.getElementById("signup-email").value;
-    const password = document.getElementById("signup-password").value;
-    const userType = document.getElementById("signup-user-type").value; // ✅ Get user type
+    const username = document.getElementById("signup-username").value.trim();
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value.trim();
+    const userType = document.getElementById("signup-user-type").value;
+
+    // ✅ Strict email validation with real domains
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|rediffmail\.com|zoho\.com)$/;
+
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email (e.g., Gmail, Yahoo, Outlook, Hotmail, etc.)");
+      return;
+    }
+
+    // ✅ Password validation (at least 8 chars, 1 uppercase, 1 number, 1 special char)
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      alert("Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.");
+      return;
+    }
+
+    // ✅ Username validation (only letters & numbers, 4-20 chars)
+    const usernameRegex = /^[a-zA-Z0-9]{4,20}$/;
+    if (!usernameRegex.test(username)) {
+      alert("Username should be 4-20 characters long and contain only letters and numbers.");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:5000/signup", {
@@ -54,9 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         localStorage.setItem("username-ppl", username);
-        localStorage.setItem("userType-ppl", userType); // ✅ Store userType
 
-        // ✅ Redirect based on user type after sign-up
+        // ✅ Redirect based on userType (Signup)
         if (userType === "participant") {
           window.location.href = "Participation.html";
         } else if (userType === "organizer") {
@@ -69,40 +89,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ✅ Sign In Form Submission
+  // ✅ Updated Sign-In Logic with Redirection to Different Pages
   document.querySelector(".sign-in-form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
-    const email = document.getElementById("signin-email").value;
-    const password = document.getElementById("signin-password").value;
+    const email = document.getElementById("signin-email").value.trim();
+    const password = document.getElementById("signin-password").value.trim();
 
     if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
+      alert("Please enter email and password.");
+      return;
     }
 
     fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     })
-    .then(response => response.json())
-    .then(data => {
+      .then(response => response.json())
+      .then(data => {
         if (data.success) {
-            localStorage.setItem("userId", data.userId);
-            localStorage.setItem("email-ppl", data.email);
-            localStorage.setItem("userType-ppl", data.userType);
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("email-ppl", data.email);
+          localStorage.setItem("userType-ppl", data.userType);
 
-            // ✅ Redirect based on user type after login
-            if (data.userType === "participant") {
-                window.location.href = "hackathon.html";
-            } else if (data.userType === "organizer") {
-                window.location.href = "hackathon-dashboard.html";
-            }
+          // ✅ Redirect based on userType (Login)
+          if (data.userType === "participant") {
+            window.location.href = "hackathon.html"; // Participant Dashboard
+          } else if (data.userType === "organizer") {
+            window.location.href = "hackathon-dashboard.html"; // Organizer Dashboard
+          } else {
+            window.location.href = "profile.html"; // Fallback
+          }
         } else {
-            alert("Invalid credentials!");
+          alert("Invalid credentials!");
         }
-    })
-    .catch(error => console.error("Error:", error));
+      })
+      .catch(error => console.error("Error:", error));
   });
 });

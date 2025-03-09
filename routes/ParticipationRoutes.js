@@ -23,6 +23,12 @@ router.post("/register", upload.single("resume"), async (req, res) => {
         // Convert skills from string to array (if needed)
         const skillsArray = typeof skills === "string" ? skills.split(",") : skills;
 
+        // Check if email already exists
+        const existingUser = await Participant.findOne({ email: req.body.email });
+        if (existingUser) {
+         return res.status(400).json({ error: "Email already registered. Please use a different email." });
+        }
+
         const newParticipant = new Participant({
             name,
             email,

@@ -24,9 +24,9 @@
             <div class="form-group">
                 <label>Gender</label>
                 <div class="gender-options">
-                    <label><input type="radio" name="gender" value="Male" required> <span>Male</span></label>
-                    <label><input type="radio" name="gender" value="Female"> <span>Female</span></label>
-                    <label><input type="radio" name="gender" value="Other"> <span>Other</span></label>
+                    <label><input type="radio" name="gender" value="Male" required> Male</label>
+                    <label><input type="radio" name="gender" value="Female"> Female</label>
+                    <label><input type="radio" name="gender" value="Other"> Other</label>
                 </div>
             </div>
 
@@ -82,13 +82,13 @@
             </div>
 
             <div class="form-group">
-                <label for="resume">Upload Your Resume (PDF only)</label>
+                <label for="resume">Upload Your Resume (PDF only, Max 2MB)</label>
                 <input type="file" id="resume" name="resume" accept="application/pdf" required>
             </div>
 
             <button type="submit">Register Now 🚀</button>
  
-             <!--Hidden link that will be shown after successful registration -->
+            <!--Hidden link that will be shown after successful registration -->
             <a id="redirectLink" href="hackathon.html" style="display: block;">Proceed to Hackathon Page</a>
 
         </form>
@@ -96,49 +96,105 @@
 
     <script>
     document.getElementById("registrationForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    let formData = new FormData();
-    formData.append("name", document.getElementById("name").value.trim());
-    formData.append("email", document.getElementById("email").value.trim());
-    formData.append("phone", document.getElementById("phone").value.trim());
-    formData.append("age", document.getElementById("age").value.trim());
-    formData.append("degree", document.getElementById("degree").value);
-    formData.append("college", document.getElementById("college").value.trim());
-    formData.append("github", document.getElementById("github").value.trim());
-    formData.append("linkedin", document.getElementById("linkedin").value.trim());
+     
+        // Get form values
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let age = document.getElementById("age").value.trim();
+        let degree = document.getElementById("degree").value;
+        let college = document.getElementById("college").value.trim();
+        let github = document.getElementById("github").value.trim();
+        let linkedin = document.getElementById("linkedin").value.trim();
+        let resume = document.getElementById("resume").files[0];
 
-    let skills = [];
-    document.querySelectorAll('input[name="skills"]:checked').forEach(skill => {
-        skills.push(skill.value);
-    });
-    formData.append("skills", skills.join(",")); // Convert array to comma-separated string
-
-    let resume = document.getElementById("resume").files[0];
-    formData.append("resume", resume);
-
-    try {
-        let response = await fetch("http://localhost:5000/api/participants/register", {
-            method: "POST",
-            body: formData
-        });
-
-        let result = await response.json();
-         if (response.ok) {
-             alert("✅ Registration successful! Redirecting...");
-             window.location.href = "hackathon.html";
-         } 
-        else {
-            alert("❌ Registration failed: " + result.error);
+        
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|rediffmail\.com|zoho\.com)$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email (only Gmail, Yahoo, Outlook, Hotmail, etc.)");
+            return;
         }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("❌ Error connecting to the server.");
-    }
-    
-});
+
+        
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        if (resume) {
+            if (resume.type !== "application/pdf") {
+                alert("Resume must be a PDF file.");
+                return;
+            }
+            if (resume.size > 2 * 1024 * 1024) {
+                alert("Resume must be less than 2MB.");
+                return;
+            }
+        } else {
+            alert("Please upload your resume.");
+            return;
+        }
+
+        let skills = [];
+        document.querySelectorAll('input[name="skills"]:checked').forEach(skill => {
+            skills.push(skill.value);
+        });
+        if (skills.length === 0) {
+            alert("Please select at least one skill.");
+            return;
+        }
+
+        let githubURL = document.getElementById("github").value.trim();
+         let linkedinURL = document.getElementById("linkedin").value.trim();
+
+        const githubPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+        const linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+
+        if (!githubPattern.test(githubURL)) {
+        alert("Please enter a valid GitHub profile link");
+        return;
+        }
+
+        if (!linkedinPattern.test(linkedinURL)) {
+        alert("Please enter a valid LinkedIn profile link");
+        return;
+        }
 
 
+        // ✅ FormData for API request
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("age", age);
+        formData.append("degree", degree);
+        formData.append("college", college);
+        formData.append("github", github);
+        formData.append("linkedin", linkedin);
+        formData.append("skills", skills.join(","));
+        formData.append("resume", resume);
+
+        try {
+            let response = await fetch("http://localhost:5000/api/participants/register", {
+                method: "POST",
+                body: formData
+            });
+
+            let result = await response.json();
+            if (response.ok) {
+                alert("✅ Registration successful! Redirecting...");
+                window.location.href = "hackathon.html";
+            } else {
+                alert("Registration failed: " + result.error);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error connecting to the server.");
+        }
+    });
     </script>
 </body>
 </html>

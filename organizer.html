@@ -68,6 +68,12 @@
             color: green;
             font-weight: bold;
         }
+        
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -78,26 +84,31 @@
         <div class="form-group">
             <label for="org-name">Organizer Name (Company/Organization)</label>
             <input type="text" id="org-name" name="org_name" placeholder="Enter company/organization name" required>
+            <div class="error" id="org-name-error"></div>
         </div>
 
         <div class="form-group">
             <label for="contact-person">Contact Person Name</label>
             <input type="text" id="contact-person" name="contact_person" placeholder="Enter contact person's name" required>
+            <div class="error" id="contact-person-error"></div>
         </div>
 
         <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter email address" required>
+            <div class="error" id="email-error"></div>
         </div>
 
         <div class="form-group">
             <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+            <div class="error" id="phone-error"></div>
         </div>
 
         <div class="form-group">
             <label for="website">Website (if any)</label>
             <input type="url" id="website" name="website" placeholder="Enter website URL (optional)">
+            <div class="error" id="website-error"></div>
         </div>
 
         <div class="form-group">
@@ -111,40 +122,92 @@
 </div>
 
 <script>
-    const form = document.getElementById('organizerForm');
+    document.getElementById('organizerForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent form submission
 
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent form from reloading the page
+        // Get values
+        const orgName = document.getElementById('org-name').value.trim();
+        const contactPerson = document.getElementById('contact-person').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const website = document.getElementById('website').value.trim();
 
-        const formData = {
-            org_name: document.getElementById('org-name').value,
-            contact_person: document.getElementById('contact-person').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            website: document.getElementById('website').value
-        };
+        
+        const nameRegex = /^[A-Za-z\s]{3,}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|rediffmail\.com|zoho\.com)$/;
+        const phoneRegex = /^[0-9]{10}$/; 
+        const urlRegex = /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}([\/?#].*)?$/;
+
+        let isValid = true;
+
+       
+        if (!nameRegex.test(orgName)) {
+            document.getElementById('org-name-error').textContent = "Enter a valid name (min 3 letters, no numbers).";
+            isValid = false;
+        } else {
+            document.getElementById('org-name-error').textContent = "";
+        }
+
+        
+        if (!nameRegex.test(contactPerson)) {
+            document.getElementById('contact-person-error').textContent = "Enter a valid name (min 3 letters, no numbers).";
+            isValid = false;
+        } else {
+            document.getElementById('contact-person-error').textContent = "";
+        }
+
+        
+        if (!emailRegex.test(email)) {
+            document.getElementById('email-error').textContent = "Enter a valid email address.";
+            isValid = false;
+        } else {
+            document.getElementById('email-error').textContent = "";
+        }
+
+        
+        if (!phoneRegex.test(phone)) {
+            document.getElementById('phone-error').textContent = "Enter a valid 10-digit phone number.";
+            isValid = false;
+        } else {
+            document.getElementById('phone-error').textContent = "";
+        }
+
+        
+        if (website && !urlRegex.test(website)) {
+            document.getElementById('website-error').textContent = " Enter a valid URL";
+            isValid = false;
+        } else {
+            document.getElementById('website-error').textContent = "";
+        }
+
+        if (!isValid) return;
+
+        // Send data to the server
+        const formData = { org_name: orgName, contact_person: contactPerson, email, phone, website };
 
         try {
             const response = await fetch('http://localhost:5000/api/organizers/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 
             if (response.ok) {
-                // Show success message
-                document.getElementById('success-message').style.display = 'block';
+            document.getElementById('success-message').style.display = 'block';
+
+            // Redirect after 2 seconds
+             setTimeout(() => {
+             window.location.href = 'hackathon-dashboard.html';
+            }, 2000);
             } else {
-                alert('❌ Registration failed. Please try again.');
+             alert('Registration failed. Please try again.');
             }
+
         } catch (error) {
-            alert('❌ Server error. Please try again later.');
+            alert('Server error. Please try again later.');
         }
     });
 </script>
 
 </body>
 </html>
-
