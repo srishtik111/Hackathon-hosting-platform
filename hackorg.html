@@ -34,16 +34,16 @@
 
             <!-- Problem Statement -->
             <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-2">Problem Statement <span class="text-red-500">*</span></label>
+                <label class="block text-gray-700 font-semibold mb-2">Description <span class="text-red-500">*</span></label>
                 <textarea class="w-full p-2 border border-gray-300 rounded-lg" 
                     id="problem-statement" rows="4" 
-                    placeholder="Write a clear and concise problem statement for the hackathon..." 
+                    placeholder="Write a clear and concise description for the hackathon..." 
                     required></textarea>
             </div>
 
             <!-- Participation Type -->
             <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-2">Participation Type <span class="text-red-500">*</span></label>
+                <label class="block text-gray-700 font-semibold mb-2">Team Size<span class="text-red-500">*</span></label>
                 <div class="flex space-x-4">
                     <button type="button" 
                         class="w-1/2 p-4 border border-gray-300 rounded-lg text-blue-500 font-semibold bg-blue-50 hover:bg-blue-100" 
@@ -177,7 +177,7 @@
 
         if (response.ok) {
             alert('✅ Hackathon Created Successfully!');
-            window.location.href = 'hackdashboard.html';
+            window.location.href = 'hackathon-dashboard.html';
         } else {
             alert('❌ Failed to Create Hackathon.');
         }
