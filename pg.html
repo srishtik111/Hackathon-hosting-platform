@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathons List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card-container {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+        }
+
+        .card-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .card-info {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .card-footer {
+            border-top: 1px solid #e5e5e5;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .btn-register {
+            background-color: #4F46E5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+
+<div class="max-w-7xl mx-auto p-4 mt-10">
+    <h2 class="text-4xl font-extrabold text-center mb-8 text-gray-800">
+        🚀 Upcoming Hackathons
+    </h2>
+
+    <div id="hackathonContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Data will be dynamically appended here -->
+    </div>
+</div>
+
+<script>
+    // ✅ Fetch Hackathon Data from Database
+    async function fetchHackathons() {
+        const response = await fetch('http://localhost:5000/api/hackathons/all');
+        const data = await response.json();
+
+        const container = document.getElementById('hackathonContainer');
+
+        if (data.length === 0) {
+            container.innerHTML = `<p class="text-center text-red-500 text-xl">No Hackathons Available</p>`;
+        }
+
+        // ✅ Append Data to Cards
+        data.forEach(hackathon => {
+            const card = `
+                <div class="card-container bg-white shadow-md rounded-lg overflow-hidden">
+                   
+                    <div class="card-body">
+                        <h3 class="card-title">${hackathon.hack_name}</h3>
+                        <p class="card-info"><strong>Theme:</strong> ${hackathon.theme}</p>
+                        <p class="card-info"><strong>Description:</strong> ${hackathon.problem_statement}</p>
+                        <p class="card-info"><strong>Start Date:</strong> ${new Date(hackathon.start_date).toDateString()}</p>
+                        <p class="card-info"><strong>End Date:</strong> ${new Date(hackathon.end_date).toDateString()}</p>
+                        <p class="card-info"><strong>Prize:</strong> ₹${hackathon.prize}</p>
+                        <p class="card-info"><strong>Guidelines:</strong> ${hackathon.guidelines || 'Not Available'}</p>
+                        <p class="card-info"><strong>Participation Type:</strong> ${hackathon.participation_type}</p>
+                        ${
+                            hackathon.participation_type === 'Team' ? 
+                            `<p class="card-info"><strong>Team Size:</strong> Min: ${hackathon.min_team_size}, Max: ${hackathon.max_team_size}</p>` : ''
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <a href="hackathon-info.html?id=${hackathon._id}" class="btn-register">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+    }
+
+    fetchHackathons();
+</script>
+
+</body>
+</html>
