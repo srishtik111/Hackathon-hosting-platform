@@ -48,71 +48,18 @@
     </section>
     <div class="hero-border">
     </div>
-
-
-     <section class="main">
-
-
-        <a href="hackathon-info.html">
-            <div class="card-container">
-                <div class="card-image">
-                    <img src="images/assets/hackathon-poster.jpg" alt="">
-                </div>
-                <div class="card-logo">
-                    <img src="/images/hackathon/3.png" alt="">
-                </div>
-                <div class="card-text-container">
-                    <div class="icons">
-                        <i class="bi bi-people-fill"><span class="icon-text">120</span></i>
-                        <i class="bi bi-coin"></i>
-                    </div>
-                    <div class="card-text">
-                        <h3 class="name">Build-a-Thon</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae tenetur inventore magnam quia delectus eos?</p>
-                    </div>
-                    <div class="tags-container">
-                        <div class="tags">
-                            <div class="dot"></div>
-                            <p class="skills">React</p>
-                        </div>
-                        <div class="tags">
-                            <div class="dot"></div>
-                            <p class="skills">WEB3</p>
-                        </div>
-                        <div class="tags">
-                            <div class="dot"></div>
-                            <p class="skills">Blockchain</p>
-                        </div>
-                        <div class="tags">
-                            <div class="dot"></div>
-                            <p class="skills">NFT</p>
-                        </div>
-                        <div class="tags">
-                            <div class="dot"></div>
-                            <p class="skills">Privacy</p>
-                        </div>
-                    </div>
-                    <div class="progress-bar"></div>
-                     <div class="prize-container">
-                        <h4>Prize</h4>
-                        <p>$2000</p>
-        
-                     </div>
-                </div>
-            </div>
-        </a>
-        
-    
-              
-                    
-        <div id="noResults" style="display: none;">
-          No matching results found
+    <div class="max-w-7xl mx-auto p-4 mt-10">
+      <h2 class="text-4xl font-extrabold text-center mb-8 text-gray-800">
+          🚀 Upcoming Hackathons
+      </h2>
+  
+      <div id="hackathonContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Data will be dynamically appended here -->
       </div>
+  </div>
 
 
-    </section> 
  
-
     <footer class="text-gray-600 body-font" id="footer">
         <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
@@ -201,5 +148,51 @@
           </div>
         </div>
       </footer>
+</body>
+<script>
+  // ✅ Fetch Hackathon Data from Database
+  async function fetchHackathons() {
+      const response = await fetch('http://localhost:5000/api/hackathons/all');
+      const data = await response.json();
+
+      const container = document.getElementById('hackathonContainer');
+
+      if (data.length === 0) {
+          container.innerHTML = `<p class="text-center text-red-500 text-xl">No Hackathons Available</p>`;
+      }
+
+      // ✅ Append Data to Cards
+      data.forEach(hackathon => {
+          const card = `
+              <div class="card-container bg-white shadow-md rounded-lg overflow-hidden">
+                 
+                  <div class="card-body">
+                      <h3 class="card-title">${hackathon.hack_name}</h3>
+                      <p class="card-info"><strong>Theme:</strong> ${hackathon.theme}</p>
+                      <p class="card-info"><strong>Description:</strong> ${hackathon.problem_statement}</p>
+                      <p class="card-info"><strong>Start Date:</strong> ${new Date(hackathon.start_date).toDateString()}</p>
+                      <p class="card-info"><strong>End Date:</strong> ${new Date(hackathon.end_date).toDateString()}</p>
+                      <p class="card-info"><strong>Prize:</strong> ₹${hackathon.prize}</p>
+                      <p class="card-info"><strong>Guidelines:</strong> ${hackathon.guidelines || 'Not Available'}</p>
+                      <p class="card-info"><strong>Participation Type:</strong> ${hackathon.participation_type}</p>
+                      ${
+                          hackathon.participation_type === 'Team' ? 
+                          `<p class="card-info"><strong>Team Size:</strong> Min: ${hackathon.min_team_size}, Max: ${hackathon.max_team_size}</p>` : ''
+                      }
+                  </div>
+                  <div class="card-footer">
+                      <a href="hackathon-info.html?id=${hackathon._id}" class="btn-register">
+                          View Details
+                      </a>
+                  </div>
+              </div>
+          `;
+          container.innerHTML += card;
+      });
+  }
+
+  fetchHackathons();
+</script>
+
 </body>
 </html>
