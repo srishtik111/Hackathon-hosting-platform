@@ -144,5 +144,5 @@ function closePopup() {
 }
 
 function redirectToHome() {
-    window.location.href = "../hackathon.html";
+    window.location.href = "../pg.html";
 }

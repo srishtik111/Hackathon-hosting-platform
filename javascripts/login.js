@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // ✅ Redirect based on userType (Login)
           if (data.userType === "participant") {
-            window.location.href = "hackathon.html"; // Participant Dashboard
+            window.location.href = "pg.html"; // Participant Dashboard
           } else if (data.userType === "organizer") {
             window.location.href = "hackathon-dashboard.html"; // Organizer Dashboard
           } else {

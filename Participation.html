@@ -89,7 +89,7 @@
             <button type="submit">Register Now 🚀</button>
  
             <!--Hidden link that will be shown after successful registration -->
-            <a id="redirectLink" href="hackathon.html" style="display: block;">Proceed to Hackathon Page</a>
+            <a id="redirectLink" href="pg.html" style="display: block;">Proceed to Hackathon Page</a>
 
         </form>
     </div>
@@ -186,7 +186,7 @@
             let result = await response.json();
             if (response.ok) {
                 alert("✅ Registration successful! Redirecting...");
-                window.location.href = "hackathon.html";
+                window.location.href = "pg.html";
             } else {
                 alert("Registration failed: " + result.error);
             }
