@@ -3,114 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="shortcut icon" href="images/assets/logo-favicon-color.svg" type="image/x-icon">
-    <link rel="stylesheet" href="stylesheets/login.css" />
-    <link rel="stylesheet" href="stylesheets/register.css" />
+    <title>Create Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-wrap {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        #team-member-container {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 400px;
+        }
+
+        .popup-content h3 {
+            font-size: 22px;
+            color: #28a745;
+        }
+
+        .popup-content input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .popup-content button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 <body>
-    <main>
-        <div class="box">
-          <div class="inner-box">
-            <div class="forms-wrap">
 
-            <!-- join a team -->
-            <form action="index.html" autocomplete="off" class="sign-in-form">
-              <div class="logo" style="width: 100%;">
-                  <a href="/"><h1 style="color: #151111;">Devnovate&lt;/&gt;</h1></a> 
-              </div>
+<div class="container">
+    <h2>🚀 Create a Team</h2>
 
-              <div class="heading">
-                  <h2>Join Team</h2>
-                  <h6>Don't have a team?</h6>
-                  <a href="#" class="toggle">Create a Team</a>
-              </div>
-
-              <div class="actual-form">
-                  <div class="input-wrap">
-                      <input type="text" class="input-field" autocomplete="off" required />
-                      <label>Enter Team Name or Invite Link</label>
-                  </div>
-                  <input type="submit" value="Join Team" class="sign-btn" />
-              </div>
-          </form>
-
-
-             <!-- HOME PAGE BUTTON - GLOBAL POSITION -->
-             <div style="position: fixed; top: 20px; right: 20px; z-index: 999;">
-              <button onclick="redirectToHome()" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
-                  Home Page
-              </button>
-          </div>
-            
-            
-            <!--  Create a team -->
-            <form autocomplete="off" class="sign-up-form">
-              <div class="logo">
-                  <h1 style="color: #151111;">Devnovate&lt;/&gt;</h1>
-              </div>
-
-              <div class="heading">
-                  <h2>Create a Team</h2>
-                  <h6>Want to join a team instead?</h6>
-                  <a href="#" class="toggle">Join Team</a>
-              </div>
-
-              <div class="actual-form">
-                  <div class="input-wrap">
-                      <input type="text" id="team-name" minlength="4" class="input-field" autocomplete="off" required />
-                      <label>Team Name</label>
-                  </div>
-                  <button type="button" class="sign-btn" onclick="generateInviteLink(event)">Create Team</button>
-
-                 <!-- Invite Link Section -->
-                  <div id="invite-container" style="display: none; margin-top: 10px;">
-                    <input type="button" id="invite-link" value="Invite Link" style="width: 100%; cursor: pointer;" />
-                     <button type="button" onclick="copyInviteLink()">Copy</button>
-                  </div>
-
-
-              </div>
-          </form>
-
-
-            </div>
-  
-            <div class="carousel">
-              <div class="images-wrapper">
-                <img src="images/assets/login1.png" class="image img-1 show" alt="" />
-                <img src="images/assets/login2.png" class="image img-2" alt="" />
-                <img src="images/assets/login3.png" class="image img-3" alt="" />
-              </div>
-  
-              <div class="text-slider">
-                <div class="text-wrap">
-                  <div class="text-group">
-                    <h2>Unleash your coding prowess</h2>
-                    <h2>Win exciting prizes</h2>
-                    <h2>Join our weekend coding frenzy!</h2>
-                  </div>
-                </div>
-  
-                <div class="bullets">
-                  <span class="active" data-value="1"></span>
-                  <span data-value="2"></span>
-                  <span data-value="3"></span>
-                </div>
-              </div>
-            </div>
-          </div>
+    <form id="create-team-form" autocomplete="on">
+        <div class="input-wrap">
+            <label>Team Name</label>
+            <input type="text" id="team-name" required>
         </div>
-      </main>
-      <div id="main2" class="hide">
-        <div id="popup13">
-            <p>Team Created Successfully&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#63E6BE" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></p>
-            <span>Redirecting to home page....</span>
-          </div>
-      </div>
-      
-      <!-- Javascript file -->
-      <script src="javascripts/login.js"></script>
-      <script src="javascripts/teamm.js"></script>
+
+        <div class="input-wrap">
+            <label>Team Size (Max 6)</label>
+            <input type="number" id="team-size" min="1" max="6" required>
+        </div>
+
+        <div id="team-member-container"></div>
+
+        <button type="button" onclick="generateInviteLink()">✅ Create Team</button>
+    </form>
+</div>
+
+<!-- ✅ Success Popup -->
+<div id="main2" class="popup hide">
+    <div class="popup-content">
+        <h3>✅ Team Created Successfully!</h3>
+        <p>Your invite link is:</p>
+        <input type="text" id="invite-link" readonly>
+        <br><br>
+        <button onclick="copyInviteLink()">📋 Copy Link</button>
+        <button onclick="redirectToHome()" class="btn-secondary">🏠 Go to Dashboard</button>
+    </div>
+</div>
+
+<script>
+const teamSizeInput = document.getElementById('team-size');
+const teamMemberContainer = document.getElementById('team-member-container');
+
+// ✅ Dynamically Generate Team Members
+teamSizeInput.addEventListener('input', function () {
+    teamMemberContainer.innerHTML = '';
+    const teamSize = parseInt(teamSizeInput.value);
+
+    for (let i = 1; i <= teamSize; i++) {
+        teamMemberContainer.innerHTML += `
+            <div class="input-wrap">
+                <label>Member ${i} Name</label>
+                <input type="text" name="memberName${i}" required>
+            </div>
+            <div class="input-wrap">
+                <label>Member ${i} Email</label>
+                <input type="email" name="memberEmail${i}" required>
+            </div>
+        `;
+    }
+});
+
+// ✅ Generate Invite Link
+async function generateInviteLink() {
+    const teamName = document.getElementById("team-name").value;
+    const teamSize = document.getElementById("team-size").value;
+    const members = [];
+
+    for (let i = 1; i <= teamSize; i++) {
+        const name = document.querySelector(`[name=memberName${i}]`).value;
+        const email = document.querySelector(`[name=memberEmail${i}]`).value;
+        members.push({ name, email });
+    }
+
+    if (teamName === "" || members.length === 0) {
+        alert("❌ Please fill all fields.");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/teams/create-team", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ teamName, members })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            const inviteInput = document.getElementById("invite-link");
+            inviteInput.value = `http://localhost:5000/join?team=${teamName}&token=${data.inviteLink}`;
+            document.getElementById("main2").classList.remove("hide");
+        } else {
+            alert("❌ Failed to create team.");
+        }
+    } catch (error) {
+        alert("❌ Server not responding.");
+    }
+}
+
+// ✅ Copy Invite Link
+function copyInviteLink() {
+    const inviteLink = document.getElementById("invite-link").value;
+    navigator.clipboard.writeText(inviteLink)
+        .then(() => alert("✅ Invite link copied successfully!"))
+        .catch(() => alert("❌ Failed to copy link."));
+}
+
+// ✅ Redirect to Dashboard
+function redirectToHome() {
+    window.location.href = "pg.html";
+}
+</script>
+
 </body>
 </html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer & Team Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card-container {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+        }
+
+        .card-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-info {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .card-footer {
+            padding-top: 10px;
+        }
+
+        .btn-register {
+            background-color: #4F46E5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .btn-register:hover {
+            background-color: #4338ca;
+        }
+
+        .team-members {
+            padding: 10px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .team-members p {
+            font-size: 0.95rem;
+            margin: 5px 0;
+        }
+
+        .fixed-size {
+            max-height: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 Organizer Details</h2>
+    <div id="organizerContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Organizer Data Will Be Appended Here -->
+    </div>
+
+    <h2 class="mt-10">👥 Team Details</h2>
+    <div id="teamContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Team Data Will Be Appended Here -->
+    </div>
+</div>
+
+
+<script>
+// ✅ Fetch Organizer Details Based on Email
+const organizerEmail = localStorage.getItem('email'); // Assuming email is stored in localStorage after login
+
+async function fetchOrganizerData() {
+    const response = await fetch(`http://localhost:5000/api/hackathons/by-email/${organizerEmail}`);
+    const data = await response.json();
+
+    const container = document.getElementById('organizerContainer');
+
+    if (data.length === 0) {
+        container.innerHTML = `<p class="text-center text-red-500 text-xl">No Hackathons Available</p>`;
+        return;
+    }
+
+    data.forEach(hackathon => {
+        const card = `
+            <div class="card-container">
+                <div class="card">
+                    <h3 class="card-title">${hackathon.hack_name}</h3>
+                    <p class="card-info"><strong>Theme:</strong> ${hackathon.theme}</p>
+                    <p class="card-info fixed-size"><strong>Description:</strong> ${hackathon.problem_statement}</p>
+                    <p class="card-info"><strong>Start Date:</strong> ${new Date(hackathon.start_date).toDateString()}</p>
+                    <p class="card-info"><strong>End Date:</strong> ${new Date(hackathon.end_date).toDateString()}</p>
+                    <p class="card-info"><strong>Prize:</strong> ₹${hackathon.prize}</p>
+                    <p class="card-info"><strong>Participation:</strong> ${hackathon.participation_type}</p>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+// ✅ Fetch Team Details (Remains Same)
+async function fetchTeamData() {
+    const response = await fetch('http://localhost:5000/api/teams/all');
+    const data = await response.json();
+
+    const container = document.getElementById('teamContainer');
+
+    if (data.length === 0) {
+        container.innerHTML = `<p class="text-center text-red-500 text-xl">No Teams Available</p>`;
+        return;
+    }
+
+    data.forEach(team => {
+        let membersHTML = "";
+        team.members.forEach(member => {
+            membersHTML += `<p>👤 ${member}</p>`;
+        });
+
+        const card = `
+            <div class="card-container">
+                <div class="card">
+                    <h3 class="card-title">${team.name}</h3>
+                    <p class="card-info"><strong>Invite Token:</strong> ${team.inviteToken}</p>
+                    <div class="team-members">
+                        <strong>Members:</strong>
+                        ${membersHTML}
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+// ✅ Call Both APIs
+fetchOrganizerData();
+fetchTeamData();
+</script>
+
+</body>
+</html>

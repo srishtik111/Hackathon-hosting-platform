@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+
 const teamRoutes = require("./routes/teamRoutes"); 
 const participantRoutes = require('./routes/ParticipationRoutes');
 const organizerRoutes = require('./routes/organizerRoutes');
@@ -20,9 +21,8 @@ connectDB();
 
 // ✅ Serve Static Files
 app.use('/uploads', express.static('uploads'));
-
+app.use("/api/teams", teamRoutes);
 app.use("/", userRoutes);
-app.use("/", teamRoutes); // Use team routes
 app.use("/api/participants", participantRoutes);
 app.use('/api/organizers', organizerRoutes);
 app.use('/api/hackathons', hackorgRoutes);
